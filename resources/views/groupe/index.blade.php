@@ -21,12 +21,15 @@
         @foreach ($groupes as $groupe)
         <tr>
             <td>{{ $groupe->Id_Groupe }}</td>
-            <td>{{ $groupe->Libelle }}</td>
+            <td>{{ Str::limit($groupe->Libelle,30)  }}</td>
             <td>{{ $groupe->Secteur }}</td>
             <td>{{ $groupe->Specialite }}</td>
             <td>{{ $groupe->Niveau }}</td>
             <td>{{ $groupe->Annee }}</td>
-            <td><a href="{{ route('emplois.show',$groupe->id) }}" class="btn btn-success" type="btn">Ajouter emploi</a></td>
+            <td>
+                <a href="{{ route('create',$groupe->id) }}" class="btn btn-success" type="btn"><img src="{{ asset('images/add.png') }}" alt="" width="30px"></a>
+                <a href="{{ route('show',$groupe->id) }}" class="btn btn-primary" type="btn"><img src="{{ asset('images/calendar.png') }}" alt="" width="30px"></a>
+            </td>
         </tr>
         @endforeach
     </table>

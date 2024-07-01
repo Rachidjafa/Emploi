@@ -9,6 +9,7 @@ class Emploi extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'groupe',
         'fromateur',
         'module',
         'salle',

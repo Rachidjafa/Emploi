@@ -7,12 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('store') }}" method="post">
+    <form action="{{ route('update',$emploi->id)}}" method="post">
         @csrf
         <div id="listeSelsalle" class="row mb-0">
             <div id="addscx" style="position:;display: ;padding-left: 0px;">
                 <input type="text" name="id_seance"  value="" hidden id="seid">
-                <input type="text" name="grp_id"  value="{{ $grp->id }}" hidden id="seid">
                 <input type="text" name="joure"  value="" hidden id="joure">
                 <input type="submit" name="seance" value="Présentielle" id="addprescx" style="margin-top:-2px;" class="btn btn-success btn-sm">
                 <input type="submit" value="Teams" name="seance" id="addprescx" style="margin-top:-2px;" class="btn btn-primary btn-sm">
@@ -25,26 +24,18 @@
                 <tbody>
                     <tr>
                         <td style="width: 110px;">
-                            <h6>Groupe :</h6>
-                            <select size="12" id="sallesc" name="groupe" class="form-select" style="width: 100%;font-size: 14px; line-height: 1;padding: 0px;">
-                                @foreach ($groupe as $item)
-                                    <option value="{{ $item->Id_Groupe }}">{{ $item->Id_Groupe }}</option>
+                            <h6>Formateur :</h6>
+                            <select size="12" id="sallesc" name="fromateur" class="form-select" style="width: 100%;font-size: 14px; line-height: 1;padding: 0px;">
+                                @foreach ($formateur as $item)
+                                    <option value="{{ $item->Nom_Prenom }}" @if ($item->Nom_Prenom == $emploi->fromateur) selected @endif>{{ $item->Nom_Prenom }}</option>
                                 @endforeach
                             </select>
                         </td>
                         <td style="width: 160px;">
-                            <h6>Formateur :</h6>
-                            <select size="12" id="sallesc" name="fromateur" class="form-select" style="width: 100%;font-size: 14px; line-height: 1;padding: 0px;">
-                                @foreach ($formateur as $item)
-                                    <option value="{{ $item->Nom_Prenom }}">{{ $item->Nom_Prenom }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td style="width: 110px;">
                             <h6>Mdules :</h6>
                             <select size="12" name="module" id="sallesc" class="form-select" style="width: 100%;font-size: 14px; line-height: 1;padding: 0px;">
                                 @foreach ($modules as $item)
-                                    <option value="{{ $item->Code_Module }}">{{ $item->Code_Module }}</option>
+                                    <option value="{{ $item->Code_Module }}" @if ($item->Code_Module == $emploi->module) selected @endif>{{ $item->Code_Module }}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -52,7 +43,7 @@
                             <h6>Salles :</h6>
                             <select size="12" name="salle" id="sallesc" class="form-select" style="width: 100%;font-size: 14px; line-height: 1;padding: 0px;">
                                 @foreach ($salles as $item)
-                                    <option value="{{ $item->numero_salle }}">salle {{ $item->numero_salle }}</option>
+                                    <option value="{{ $item->numero_salle }}" @if ($item->numero_salle == $emploi->salle) selected @endif>{{ $item->numero_salle }}</option>
                                 @endforeach
                             </select>
                         </td>

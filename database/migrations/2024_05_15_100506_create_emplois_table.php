@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('emplois', function (Blueprint $table) {
             $table->id();
+            $table->string("groupe");
             $table->string("fromateur");
             $table->string("module");
-            $table->integer("salle");
+            $table->integer("salle")->nullable();
             $table->string("seance");
             $table->string("joure");
             $table->string("id_seance");
