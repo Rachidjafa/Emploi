@@ -47,7 +47,12 @@
             left: 248px;
             top: 110px;
         }
-        #exit{
+        #mydiv2{
+            position: absolute;
+            left: 248px;
+            top: 110px;
+        }
+        #exit, #exit_update {
             position: relative;
             left: 574px;
             cursor: pointer;
@@ -59,24 +64,47 @@
             font-size: 10px;
             margin-bottom: -26px;
         }
+        .actions{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position:absolute;
+            margin-top: -60px;
+        }
+
+        .delete-action1{
+            position:static;
+            margin-left: -10px;
+        }
+        .delete-action2{
+            position: static;
+            margin-left: -16px;
+            margin-top: -5px;
+        }
+        .delete-action3{
+            position: static;
+            margin-left: -16px;
+            margin-top: -5px;
+        }
+        .delete-action4{
+            position: static;
+            margin-top: 1px;
+            margin-left: -10px;
+        }
     </style>
 </head>
-<body class="container mt-4 bg-light">
+<body class="container mt-5 bg-light">
     <h1 class="h1 text-center mt-3">Créer emploi du temps</h1>
-    <form class="row g-3">
-        @csrf
-        <input type="date" class="form-control" name="" id="">
-        <button class="btn btn-success">Valider</button>
-    </form>
-    <table class="mt-4" >
+    <table class="mt-5" >
         <thead>
-          <tr>
-            <th id="th">Jour\heure</th>
-            <th>08:30 - 11:00</th>
-            <th>11:00 - 13:30</th>
-            <th>13:30 - 16:00</th>
-            <th>16:30 - 18:30</th>
-          </tr>
+            <tr>
+                <th id="th">Jour\heure</th>
+                <th>08:30 - 11:00</th>
+                <th>11:00 - 13:30</th>
+                <th>13:30 - 16:00</th>
+                <th>16:30 - 18:30</th>
+            </tr>
         </thead>
         <tbody>
             @foreach($daysOfWeek as $day)
@@ -85,97 +113,150 @@
                 <td id="ses1" class="{{ $day['day']."".$day['date'] }}">
                     @forEach ($emplois as $emploi)
                     @if($emploi->id_seance == "ses1" && $day['day']."".$day['date']== $emploi->joure )
-                    <p id="pp">{{ $emploi->groupe }}</p><br>
-                    <p>{{ $emploi->fromateur }}</p><br>
-                    <p>{{ $emploi->module }}</p><br>
+                        <p id="pp">{{ $emploi->groupe }}</p><br>
+                        <p>{{ $emploi->fromateur }}</p><br>
+                        <p>{{ $emploi->module }}</p><br>
                     @if($emploi->seance !== "Teams")
-                    <p>salle {{ $emploi->salle }}</p><br>
+                        <p>salle {{ $emploi->salle }}</p><br>
                     @endif
                     @if($emploi->seance == "Teams")
-                    <p>{{ $emploi->seance }}</p><br>
+                        <p>{{ $emploi->seance }}</p><br>
                     @endif
+                    <div class="actions">
+                        <div class="delete-action1">
+                            <from action="{{ route('delete',$emploi->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button id="supp" style="border: none; background-color: transparent"><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></button>
+                            </from>
+                        </div>
+                    </div>
                     @endif
                     @endforeach
                 </td>
                 <td id="ses2" class="{{ $day['day']."".$day['date']}}">
                     @forEach ($emplois as $emploi)
                     @if($emploi->id_seance == "ses2" && $day['day']."".$day['date']== $emploi->joure )
-                    <p id="pp">{{ $emploi->groupe }}</p><br>
-                    <p>{{ $emploi->fromateur }}</p><br>
-                    <p>{{ $emploi->module }}</p><br>
-                    @if($emploi->seance !== "Teams")
-                    <p>salle {{ $emploi->salle }}</p><br>
-                    @endif
-                    @if($emploi->seance == "Teams")
-                    <p>{{ $emploi->seance }}</p><br>
-                    @endif
+                        <p id="pp">{{ $emploi->groupe }}</p><br>
+                        <p>{{ $emploi->fromateur }}</p><br>
+                        <p>{{ $emploi->module }}</p><br>
+                        @if($emploi->seance !== "Teams")
+                            <p>salle {{ $emploi->salle }}</p><br>
+                        @endif
+                        @if($emploi->seance == "Teams")
+                            <p>{{ $emploi->seance }}</p><br>
+                        @endif
+                        <div class="actions">
+                            <div class="delete-action2">
+                                <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></a>
+                            </div>
+                        </div>
                     @endif
                     @endforeach
                 </td>
                 <td id="ses3" class="{{ $day['day']."".$day['date']}}">
                     @forEach ($emplois as $emploi)
                     @if($emploi->id_seance == "ses3" && $day['day']."".$day['date']== $emploi->joure )
-                    <p id="pp">{{ $emploi->groupe }}</p><br>
-                    <p>{{ $emploi->fromateur }}</p><br>
-                    <p>{{ $emploi->module }}</p><br>
-                    @if($emploi->seance !== "Teams")
-                    <p>salle {{ $emploi->salle }}</p><br>
+                        <p id="pp">{{ $emploi->groupe }}</p><br>
+                        <p>{{ $emploi->fromateur }}</p><br>
+                        <p>{{ $emploi->module }}</p><br>
+                        @if($emploi->seance !== "Teams")
+                            <p>salle {{ $emploi->salle }}</p><br>
                     @endif
                     @if($emploi->seance == "Teams")
-                    <p>{{ $emploi->seance }}</p><br>
+                        <p>{{ $emploi->seance }}</p><br>
                     @endif
+                    <div class="actions">
+                        <div class="delete-action3">
+                            <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></a>
+                        </div>
+                    </div>
                     @endif
                     @endforeach
                 </td>
                 <td id="ses4" class="{{ $day['day']."".$day['date']}}">
                     @forEach ($emplois as $emploi)
                     @if($emploi->id_seance == "ses4" && $day['day']."".$day['date']== $emploi->joure )
-                    <p id="pp">{{ $emploi->groupe }}</p><br>
-                    <p>{{ $emploi->fromateur }}</p><br>
-                    <p>{{ $emploi->module }}</p><br>
+                        <p id="pp">{{ $emploi->groupe }}</p><br>
+                        <p>{{ $emploi->fromateur }}</p><br>
+                        <p>{{ $emploi->module }}</p><br>
                     @if($emploi->seance !== "Teams")
-                    <p>salle {{ $emploi->salle }}</p><br>
+                        <p>salle {{ $emploi->salle }}</p><br>
                     @endif
                     @if($emploi->seance == "Teams")
-                    <p>{{ $emploi->seance }}</p><br>
+                        <p>{{ $emploi->seance }}</p><br>
                     @endif
+                    <div class="actions">
+                        <div class="delete-action4">
+                            <from action="{{ route('delete',$emploi->id_seance) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button id="supp" style="border: none; background-color: transparent"><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></button>
+                            </from>
+                        </div>
+                    </div>
                     @endif
                     @endforeach
                 </td>
             </tr>
-            </tr>
-        @endforeach
+            @endforeach
         </tbody>
-      </table>
-      <div id="mydiv" style="display: none;">
-        @include('emploi.create')
-      </div>
-      <script>
+    </table>
+
+    @include('emploi.create')
+    @include('emploi.update')
+
+    <script>
+        // Get references to the forms and the table
+        const formCreate = document.getElementById('mydiv');
+        const formUpdate = document.getElementById('mydiv2');
+        const exitButton = document.getElementById('exit');
+        const exitButtonUpdate = document.getElementById('exit_update');
         const cells = document.querySelectorAll('tbody #ses1, #ses2, #ses3, #ses4');
 
-        const mydiv = document.getElementById('mydiv');
-        const close = document.getElementById('exit')
+        // Hide the forms initially
+        formCreate.style.display = 'none';
+        formUpdate.style.display = 'none';
 
+        // Event listener to close the forms
+        exitButton.addEventListener('click', () => {
+            formCreate.style.display = 'none';
+        });
+
+        exitButtonUpdate.addEventListener('click', () => {
+            formUpdate.style.display = 'none';
+        });
+
+        // Add click event listeners to each cell
         cells.forEach(cell => {
             cell.addEventListener('mouseover', () => {
-            cell.style.backgroundColor = '#ccc';
-        });
+                cell.style.backgroundColor = '#ccc';
+            });
+            cell.addEventListener('mouseout', () => {
+                cell.style.backgroundColor = '';
+            });
+            cell.addEventListener('click', (e) => {
+                const day = cell.className;
+                const seance = cell.id;
+                document.getElementById('seid').value=e.target.id
+                document.getElementById('joure').value=e.target.className
 
-        cell.addEventListener('mouseout', () => {
-            cell.style.backgroundColor = '';
+                // Check if the cell is empty
+                if (cell.innerText.trim() === '') {
+                    // Show the create form and fill in the day and seance
+                    formCreate.style.display = 'block';
+                    formUpdate.style.display = 'none';
+                    document.getElementById('seid').value=e.target.id
+                    document.getElementById('joure').value=e.target.className
+                } else {
+                    // Show the update form and fill in the day and seance
+                    formUpdate.style.display = 'block';
+                    formCreate.style.display = 'none';
+                    document.getElementById('seid').value=e.target.id
+                    document.getElementById('joure').value=e.target.className
+                }
+            });
         });
-
-        cell.addEventListener('click', (e) => {
-            console.log(e)
-            mydiv.style.display = mydiv.style.display === 'none' ? 'block' : 'none';
-            document.getElementById('seid').value=e.target.id
-            document.getElementById('joure').value=e.target.className
-        });
-
-        close.addEventListener('click', function() {
-            mydiv.style.display = 'none';
-        });
-    });
-      </script>
-</body>
+    </script>
+    </body>
 </html>

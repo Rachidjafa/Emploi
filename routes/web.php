@@ -20,10 +20,10 @@ Route::resource('groupes',GroupeController::class);
 Route::get('/emploi/create/{id}',[EmploitController::class,'create'])->name('create');
 Route::post('/emploi/store',[EmploitController::class,'store'])->name('store');
 
-Route::get('/emploi/show/{id}',[EmploitController::class,'show'])->name('show');
+Route::post('/emploi/update/{id_seance}',[EmploitController::class,'update'])->name('update');
 
-Route::get('/emploi/show/update/{id}',[EmploitController::class,'edit'])->name('edit');
-Route::post('/update/{id}',[EmploitController::class,'update'])->name('update');
+Route::post('/emploi/delete/{id_seance}',[EmploitController::class,'destroy'])->name('delete');
+
 
 Route::get('/', function () {
     return view('welcome');

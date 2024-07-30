@@ -26,7 +26,7 @@
         #td {
             background-color: #f0f0f0;
             text-align: start;
-            font-weight: bold;
+            font-weight: bold
         }
         #sub{
             background: transparent;
@@ -59,27 +59,32 @@
             font-size: 10px;
             margin-bottom: -26px;
         }
-        #update{
-            background: none;
-            border: none;
-            position: relative;;
-            left: 81px;
-            top: -65px;
+        .actions{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position:absolute;
+            margin-top: -60px;
+        }
 
+        .update-action, .delete-action{
+            position: relative;
+            left: 170px;
         }
+
+        #update{
+            margin-top: -3px;
+        }
+
         #supp{
-            background: none;
-            border: none;
-            height: 15px;
-            position: relative;;
-            left: 81px;
-            top: -78px;
-            margin-bottom: 10px;
+            margin-top: -11px;
         }
+
     </style>
 </head>
 <body class="container mt-4 bg-light">
-    <h1 class="h1 text-center mt-3">Emploi du temps de groupe {{ $groupe->Id_Groupe }}</h1>
+    <h1 class="h1 text-center mt-3">Créer emploi du temps</h1>
     <table class="mt-4" >
         <thead>
           <tr>
@@ -106,8 +111,18 @@
                     @if($emploi->seance == "Teams")
                     <p>{{ $emploi->seance }}</p><br>
                     @endif
-                    <a href="{{ route('edit',$emploi->id) }}" class="btn" type="btn" id="update"><img src="{{ asset('images/crayon.png') }}" alt="" width="30px"></a><br>
-                    <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="30px"></a>
+                    <div class="actions">
+                        <div class="update-action">
+                            <a href="{{ route('edit',$emploi->id) }}" class="btn" type="btn" id="update"><img src="{{ asset('images/crayon.png') }}" alt="" width="27px"></a>
+                        </div>
+                        <div class="delete-action">
+                            <from action="{{ route('delete',$emploi->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button id="supp" style="border: none; background-color: transparent"><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></button>
+                            </from>
+                        </div>
+                    </div>
                     @endif
                     @endforeach
                 </td>
@@ -123,8 +138,14 @@
                     @if($emploi->seance == "Teams")
                     <p>{{ $emploi->seance }}</p><br>
                     @endif
-                    <a href="" class="btn" type="btn" id="update"><img src="{{ asset('images/crayon.png') }}" alt="" width="30px"></a><br>
-                    <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="30px"></a>
+                    <div class="actions">
+                        <div class="update-action">
+                            <a href="{{ route('edit',$emploi->id) }}" class="btn" type="btn" id="update"><img src="{{ asset('images/crayon.png') }}" alt="" width="27px"></a>
+                        </div>
+                        <div class="delete-action">
+                            <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></a>
+                        </div>
+                    </div>
                     @endif
                     @endforeach
                 </td>
@@ -140,8 +161,14 @@
                     @if($emploi->seance == "Teams")
                     <p>{{ $emploi->seance }}</p><br>
                     @endif
-                    <a href="" class="btn" type="btn" id="update"><img src="{{ asset('images/crayon.png') }}" alt="" width="30px"></a><br>
-                    <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="30px"></a>
+                    <div class="actions">
+                        <div class="update-action">
+                            <a href="{{ route('edit',$emploi->id) }}" onclick="{{ ShowUpdate }}" class="btn" type="btn" id="update"><img src="{{ asset('images/crayon.png') }}" alt="" width="27px"></a>
+                        </div>
+                        <div class="delete-action">
+                            <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></a>
+                        </div>
+                    </div>
                     @endif
                     @endforeach
                 </td>
@@ -157,64 +184,67 @@
                     @if($emploi->seance == "Teams")
                     <p>{{ $emploi->seance }}</p><br>
                     @endif
-                    <a href="" class="btn" type="btn" id="update"><img src="{{ asset('images/crayon.png') }}" alt="" width="30px"></a><br>
-                    <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="30px"></a>
+                    <div class="actions">
+                        <div class="update-action">
+                            <a href="{{ route('edit',$emploi->id) }}" class="btn" type="btn" id="update"><img src="{{ asset('images/crayon.png') }}" alt="" width="27px"></a>
+                        </div>
+                        <div class="delete-action">
+                            <from action="{{ route('delete',$emploi->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button id="supp"><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></button>
+                            </from>
+                        </div>
+                    </div>
                     @endif
                     @endforeach
                 </td>
             </tr>
+            </tr>
         @endforeach
         </tbody>
       </table>
-      <div id="mydiv">
+      <div id="mydiv" style="display: none;">
+        @include('emploi.create')
+      </div>
+      <div id="mydiv2" style="display: none;">
+        <h1>cc</h1>
         @include('emploi.update')
       </div>
       <script>
         const cells = document.querySelectorAll('tbody #ses1, #ses2, #ses3, #ses4');
-        const mydiv = document.getElementById('mydiv');
-
-        const close = document.getElementById('exit');
 
         const update = document.getElementById('update');
 
-        const tzs = document.querySelectorAll('#tz1, #tz2, #tz3, #tz4');
+        const mydiv = document.getElementById('mydiv');
+        const mydiv2 = document.getElementById('mydiv2');
 
-        /*cells.forEach((cell,index) => {
-             cell.addEventListener('mouseover', () => {
+        const close = document.getElementById('exit')
+
+        cells.forEach(cell => {
+            cell.addEventListener('mouseover', () => {
             cell.style.backgroundColor = '#ccc';
+        });
 
-            /* tzs.forEach(tz=>{
-                if (cell.children[0] === tz){
-                    tz.style.display = tz.style.display === 'none' ? 'block' : 'none';
-                }
-            })
-        });*/
+        cell.addEventListener('mouseout', () => {
+            cell.style.backgroundColor = '';
+        });
 
-        /* cell.children[0].children[0].addEventListener('click', (e) => {
+        cell.addEventListener('click', (e) => {
+            console.log(e)
             mydiv.style.display = mydiv.style.display === 'none' ? 'block' : 'none';
             document.getElementById('seid').value=e.target.id
             document.getElementById('joure').value=e.target.className
         });
 
-
-        /* cell.addEventListener('mouseout', () => {
-            cell.style.backgroundColor = '';
-            tzs.forEach(tz=>{
-                if (cell.children.item("div") === tz){
-                    tz.style.display = 'none';
-                }
-            })
-        }); */
-
-        update.addEventListener('click', function() {
-            mydiv.style.display = mydiv.style.display === 'none' ? 'block' : 'none';
-        });
+        function ShowUpdate(){
+            mydiv2.style.display = mydiv2.style.display === 'none' ? 'block' : 'none';
+        }
 
         close.addEventListener('click', function() {
             mydiv.style.display = 'none';
         });
-
-    /* }); */
+    });
       </script>
 </body>
 </html>

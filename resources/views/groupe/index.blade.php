@@ -28,7 +28,6 @@
             <td>{{ $groupe->Annee }}</td>
             <td>
                 <a href="{{ route('create',$groupe->id) }}" class="btn btn-success" type="btn"><img src="{{ asset('images/add.png') }}" alt="" width="30px"></a>
-                <a href="{{ route('show',$groupe->id) }}" class="btn btn-primary" type="btn"><img src="{{ asset('images/calendar.png') }}" alt="" width="30px"></a>
             </td>
         </tr>
         @endforeach
