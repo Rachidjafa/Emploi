@@ -20,11 +20,7 @@ Route::resource('groupes',GroupeController::class);
 Route::get('/emploi/create/{id}',[EmploitController::class,'create'])->name('create');
 Route::post('/emploi/store',[EmploitController::class,'store'])->name('store');
 
-Route::post('/emploi/update/{id_seance}',[EmploitController::class,'update'])->name('update');
+Route::post('/emploi/update/{id}',[EmploitController::class,'edit'])->name('update');
 
-Route::post('/emploi/delete/{id_seance}',[EmploitController::class,'destroy'])->name('delete');
+Route::delete('/emploi/{id}', [EmploitController::class, 'destroy'])->name('emploi.destroy');
 
-
-Route::get('/', function () {
-    return view('welcome');
-});

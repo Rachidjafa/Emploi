@@ -1,6 +1,6 @@
 <div id="mydiv2" class="row" id="listeSelsalle">
     <div class="col-12 col-lg-10">
-        <form action="{{ route('update',$emploi->id_seance) }}" method="POST">
+        <form action="{{ route('update',$emploi->id) }}" method="POST">
             @csrf
             <div id="listeSelsalle" class="row mb-0">
                 <div id="addscx" style="position: display: ;padding-left: 0px;">

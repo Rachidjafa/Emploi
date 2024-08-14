@@ -124,11 +124,13 @@
                     @endif
                     <div class="actions">
                         <div class="delete-action1">
-                            <from action="{{ route('delete',$emploi->id) }}" method="post">
+                            <form action="{{ route('emploi.destroy', $emploi->id) }}" method="POST">
                                 @csrf
-                                @method('delete')
-                                <button id="supp" style="border: none; background-color: transparent"><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></button>
-                            </from>
+                                @method('DELETE')
+                                <button type="submit" id="deleteButton" style="border: none; background-color: transparent;">
+                                    <img src="{{ asset('images/delete.png') }}" alt="Delete" width="26px">
+                                </button>
+                            </form>
                         </div>
                     </div>
                     @endif
@@ -148,7 +150,13 @@
                         @endif
                         <div class="actions">
                             <div class="delete-action2">
-                                <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></a>
+                                <form action="{{ route('emploi.destroy', $emploi->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" id="deleteButton" style="border: none; background-color: transparent;">
+                                        <img src="{{ asset('images/delete.png') }}" alt="Delete" width="26px">
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endif
@@ -168,7 +176,13 @@
                     @endif
                     <div class="actions">
                         <div class="delete-action3">
-                            <a id="supp" class="btn" type="btn" ><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></a>
+                            <form action="{{ route('emploi.destroy', $emploi->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" id="deleteButton" style="border: none; background-color: transparent;">
+                                    <img src="{{ asset('images/delete.png') }}" alt="Delete" width="26px">
+                                </button>
+                            </form>
                         </div>
                     </div>
                     @endif
@@ -188,11 +202,13 @@
                     @endif
                     <div class="actions">
                         <div class="delete-action4">
-                            <from action="{{ route('delete',$emploi->id_seance) }}" method="post">
+                            <form action="{{ route('emploi.destroy', $emploi->id) }}" method="POST">
                                 @csrf
-                                @method('delete')
-                                <button id="supp" style="border: none; background-color: transparent"><img src="{{ asset('images/delete.png') }}" alt="" width="26px"></button>
-                            </from>
+                                @method('DELETE')
+                                <button type="submit" id="deleteButton" style="border: none; background-color: transparent;">
+                                    <img src="{{ asset('images/delete.png') }}" alt="Delete" width="26px">
+                                </button>
+                            </form>
                         </div>
                     </div>
                     @endif
@@ -206,7 +222,7 @@
     @include('emploi.create')
     @include('emploi.update')
 
-    <script>
+    {{-- <script>
         // Get references to the forms and the table
         const formCreate = document.getElementById('mydiv');
         const formUpdate = document.getElementById('mydiv2');
@@ -257,6 +273,82 @@
                 }
             });
         });
+    </script> --}}
+    <script>
+        // Get references to the forms and the table
+        const formCreate = document.getElementById('mydiv');
+        const formUpdate = document.getElementById('mydiv2');
+        const exitButton = document.getElementById('exit');
+        const exitButtonUpdate = document.getElementById('exit_update');
+        const cells = document.querySelectorAll('tbody td[id^="ses"]');
+
+        // Hide the forms initially
+        formCreate.style.display = 'none';
+        formUpdate.style.display = 'none';
+
+        // Event listener to close the forms
+        exitButton.addEventListener('click', () => {
+            formCreate.style.display = 'none';
+        });
+
+        exitButtonUpdate.addEventListener('click', () => {
+            formUpdate.style.display = 'none';
+        });
+
+        // Add click event listeners to each cell
+        cells.forEach(cell => {
+            cell.addEventListener('mouseover', () => {
+                cell.style.backgroundColor = '#ccc';
+            });
+            cell.addEventListener('mouseout', () => {
+                cell.style.backgroundColor = '';
+            });
+            cell.addEventListener('click', (e) => {
+                const day = cell.className;
+                const seance = cell.id;
+                const emploiData = extractEmploiData(cell);
+
+                // Check if the cell is empty
+                if (emploiData.isEmpty) {
+                    // Show the create form and fill in the day and seance
+                    formCreate.style.display = 'block';
+                    formUpdate.style.display = 'none';
+                    document.getElementById('seid').value = seance;
+                    document.getElementById('joure').value = day;
+                } else {
+                    // Show the update form and fill in the day and seance
+                    formUpdate.style.display = 'block';
+                    formCreate.style.display = 'none';
+                    populateUpdateForm(emploiData);
+                }
+            });
+        });
+
+        function extractEmploiData(cell) {
+            const emploiData = {
+                groupe: '',
+                fromateur: '',
+                module: '',
+                salle: '',
+                seance: '',
+                isEmpty: true
+            };
+
+            const paragraphs = cell.querySelectorAll('p');
+            if (paragraphs.length > 0) {
+                emploiData.isEmpty = false;
+                emploiData.groupe = paragraphs[0].innerText;
+                emploiData.fromateur = paragraphs[1].innerText;
+                emploiData.module = paragraphs[2].innerText;
+                if (paragraphs[3]) {
+                    emploiData.salle = paragraphs[3].innerText;
+                }
+                emploiData.seance = cell.id;
+            }
+
+            return emploiData;
+        }
     </script>
+
     </body>
 </html>

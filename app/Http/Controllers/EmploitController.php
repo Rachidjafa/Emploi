@@ -40,14 +40,15 @@ class EmploitController extends Controller
         Emploi::create($request->all());
         return redirect()->route('create',$request->grp_id);
     }
-    public function update(Request $request, string $id_seance)
+    public function edit(Request $request, string $id)
     {
-        Emploi::find($id_seance)->update($request->all());
+        Emploi::find($id)->update($request->all());
         return redirect()->route('create',$request->grp_id);
     }
-    public function destroy(string $id_seance)
+    public function destroy($id)
     {
-        Emploi::find($id_seance)->delete();
-        return redirect()->route('create');
+        $emploi = Emploi::findOrFail($id);
+        $emploi->delete();
+        return redirect()->back()->with('success', 'Emploi supprimé avec succès');
     }
 }
